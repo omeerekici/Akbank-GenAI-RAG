@@ -1,0 +1,231 @@
+/* ===============================
+   🌗 LIGHT / DARK THEME STYLES
+   =============================== */
+
+body.light {
+    --bg-color: #e9e9f0; 
+    --text-color: #1c1c1e; 
+    --card-bg: #fdfdfd; 
+    --border-color: #d1d1d8;
+    --accent: #7952B3;
+    --input-bg: #ffffff;
+    --input-placeholder: #555;
+    --input-container-border: #d1d1d8;
+    --error-bg: #ffefef;
+    --error-text: #a94442;
+    --error-border: #d9534f;
+    --user-chat-bg: #f0f0f5; 
+}
+
+body.dark {
+    --bg-color: #121212;
+    --text-color: #eaeaea; 
+    --card-bg: #1e1c2f;
+    --border-color: #444;
+    --accent: #b89fff;
+    --input-bg: #1e1e2f;
+    --input-placeholder: #999;
+    --input-container-border: #444;
+    --error-bg: #3a1f1f;
+    --error-text: #ffcccc;
+    --error-border: #d9534f;
+    --user-chat-bg: #26262f; 
+}
+
+/* ===============================
+   2. FULL EKRAN TEMA UYGULAMASI
+   =============================== */
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
+    transition: all 0.4s ease;
+    min-height: 100vh;
+}
+
+.stApp {
+    background-color: transparent !important; 
+    color: inherit; 
+}
+
+[data-testid="stHeader"] {
+    background-color: var(--bg-color) !important;
+    border-bottom: none !important; 
+    transition: all 0.4s ease;
+}
+
+body.light [data-testid="stBottom"] {
+    background-color: var(--bg-color) !important;
+    border-top: 1px solid var(--input-container-border) !important;
+    transition: all 0.4s ease;
+}
+
+body.dark [data-testid="stBottom"] {
+    background-color: var(--bg-color) !important;
+    border-top: 1px solid var(--input-container-border) !important;
+    transition: all 0.4s ease;
+}
+
+[data-testid="stChatInputContainer"] {
+    background-color: transparent !important;
+    border-top: none !important; 
+}
+
+[data-testid="stChatMessage"] p,
+[data-testid="stChatMessage"] li {
+    color: var(--text-color) !important; 
+}
+
+[data-testid="chat-message-container-user"] {
+    background-color: var(--user-chat-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 10px;
+}
+
+[data-testid="chat-message-container-assistant"] {
+    background-color: transparent !important;
+    border: none !important; 
+    padding-left: 0 !important; 
+    margin-left: 0 !important;
+}
+[data-testid="chat-message-container-assistant"] > div > div {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
+
+[data-testid="stChatInput"] {
+    background-color: transparent !important;
+}
+[data-testid="stChatInput"] textarea {
+    background-color: var(--input-bg) !important; 
+    color: var(--text-color) !important;
+    border: 1px solid var(--border-color) !important;
+}
+[data-testid="stChatInput"] textarea::placeholder {
+    color: var(--input-placeholder);
+}
+
+/* ===============================
+   4. KART STİLLERİ
+   =============================== */
+
+.drug-container {
+    max-width: 750px; 
+    margin: 20px 0 20px 0; 
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start; 
+}
+
+.info-card, .general-card, .score-card, .review-card {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    padding: 16px 20px;
+    border-radius: 14px;
+    border-left: 5px solid var(--accent);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    width: 100%; 
+    box-sizing: border-box; 
+}
+
+.info-card:hover, .general-card:hover, .score-card:hover, .review-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+}
+
+.info-card h3, .general-card h3, .score-card h3, .review-card h3 {
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-size: 1.15rem;
+}
+
+.puan {
+    font-size: 1.35em;
+    font-weight: bold;
+    color: var(--accent);
+    margin-top: 8px;
+}
+
+.review-item {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    background-color: var(--bg-color); 
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.puan-mini {
+    color: var(--accent);
+    font-weight: bold;
+}
+.yorum {
+    font-style: italic;
+    margin: 3px 0 0 8px;
+}
+
+.yorum-yok {
+    font-style: italic;
+    color: var(--text-color);
+    opacity: 0.7; 
+    margin: 10px 0;
+    padding-left: 8px;
+}
+
+.error-box {
+    background: var(--error-bg);
+    border-left: 5px solid var(--error-border);
+    color: var(--error-text); 
+    border-radius: 8px;
+    padding: 10px 15px;
+}
+
+.stButton > button {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.stButton > button:hover {
+    filter: brightness(1.1);
+}
+
+h1, .stTitle {
+    color: var(--accent);
+    text-align: center;
+    font-weight: 700;
+}
+
+/* ===============================
+   🔍 ARAMA / ODAK FOKUSU
+   =============================== */
+
+body.blur-active .stApp > *:not(.focused) {
+    filter: blur(4px) brightness(0.6);
+    pointer-events: none;
+    user-select: none;
+    transition: filter 0.3s ease;
+}
+
+body.blur-active::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.2);
+    z-index: 998;
+}
+
+.focused {
+    filter: blur(0) brightness(1) !important;
+    z-index: 999;
+    position: relative;
+    transition: all 0.3s ease;
+}
