@@ -57,20 +57,20 @@ RAG Akış Şeması (Hibrit ve Karar Odaklı):
 ## 4. Web Arayüzü & Çalıştırma Kılavuzu 
 
 
+### 🖼️ Elde Edilen Sonuçların ve Arayüzün Kanıtları
 
+Aşağıdaki görseller, projenin farklı fonksiyonlarının (RAG, Google Tool ve Halüsinasyon Kontrolü) başarılı çıktısını göstermektedir:
 
+#### Fonksiyonel Çıktılar ve Başarı Kanıtları:
 
-
-
-
-
-
-
-
-
-
-
+| Sıra | Açıklama | Görsel |
+| :---: | :--- | :--- |
+| **1** | **Ana Sayfa / Dark Mode** | ![Uygulamanın koyu tema (Dark Mode) görünümü.](images/1.png) |
+| **2** | **Ana Sayfa / Light Mode** | ![Uygulamanın açık tema (Light Mode) görünümü.](images/2.png) |
+| **3** | **Spesifik İlaç Analizi (Başarılı Sorgu)** | ![Bir ilaç hakkında genel bilgi ve kullanıcı yorumlarının özeti.](images/3.png) |
+| **4** | **Detaylı İlaç Değerlendirmesi** | ![Aynı ilacın detaylı kullanıcı yorumlarının gösterimi ve ortalama puanın sunulması.](images/4.png) |
+| **5** | **İlaç Karşılaştırma Analizi** | ![İki farklı ilacın karşılaştırılmasına dair başarılı yanıt, genel bilgi ve yorum özetleri.](images/5.png) |
+| **6** | **Karşılaştırmanın Detaylı Değerlendirmesi** | ![Karşılaştırılan ilaçlarla ilgili detaylı kullanıcı yorumları ve ortalama puanın gösterimi.](images/6.png) |
+| **7** | **Halüsinasyon Kontrolü (Yetersiz Bilgi)** | ![Sorgulanan ilaç hakkında yeterli bilgi bulunamadığında verilen uyarı (Halüsinasyon Kontrolü/Bilgi Yetmezliği).](images/7.png) |
 
 ---
-
-## 
