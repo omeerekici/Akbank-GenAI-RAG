@@ -12,7 +12,7 @@ load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 CHROMA_PATH = "./chroma_db"
 COLLECTION_NAME = "drugs_review_collection"
-# Ham veri dosyalarınızın bulunduğu klasör (Streamlit'in çekmesi için GitHub'da olmalı!)
+# Ham veri dosyalarınızın bulunduğu klasör
 DATA_SOURCE_PATH = "./data_sources" 
 
 
@@ -56,7 +56,7 @@ def get_chroma_db():
         try:
             
             # *******************************************************************
-            ### BURASI VERİ YÜKLEME VE İŞLEME MANTIĞINIZIN ÇALIŞACAĞI BLOK ###
+            ### VERİ YÜKLEME VE İŞLEME MANTIĞI: BELLEK İÇİN KISITLAMA YAPILDI ###
             # *******************************************************************
             
             # 1. Ham Veriyi Yükleme ve Birleştirme
@@ -66,24 +66,29 @@ def get_chroma_db():
             if not os.path.exists(train_file) or not os.path.exists(test_file):
                  raise FileNotFoundError(f"Ham veri dosyalarından biri veya ikisi bulunamadı. Lütfen {DATA_SOURCE_PATH} klasörünü kontrol edin.")
 
-            df_train = pd.read_csv(train_file)
-            df_test = pd.read_csv(test_file)
-            
-            # Veri setlerini birleştirme
-            df = pd.concat([df_train, df_test], ignore_index=True)
+            # ENCODING DÜZELTME ve sadece TRAIN dosyasını alıyoruz (TEST'i şimdilik ihmal ettik)
+            # Daha güvenli bir okuma için 'latin-1' kullanıldı
+            df_train = pd.read_csv(train_file, encoding='latin-1')
+            df = df_train # Sadece train setini kullanıyoruz
             
             # 2. Veri Temizleme ve Hazırlık
-            # Sadece gerekli sütunları seçme ve NaN/Boş değerleri temizleme
             REQUIRED_COLUMNS = ['review', 'drugName', 'condition', 'rating']
             df.dropna(subset=REQUIRED_COLUMNS, inplace=True)
+            
+            # KRİTİK KISITLAMA: RAM HATASINI ÇÖZMEK İÇİN KAYIT SINIRLAMA
+            LIMIT_ROW_COUNT = 50000 
+            if len(df) > LIMIT_ROW_COUNT:
+                df = df.head(LIMIT_ROW_COUNT)
+            
+            print(f"⚠️ Bellek koruması için sadece {len(df)} kayıt kullanılacaktır.")
             
             # Metinler (documents) ve Metadatalar (passages_df)
             texts = df['review'].tolist()
             passages_df = df[['drugName', 'condition', 'rating']].copy()
             
-            # 3. Embeddings'i Yeniden Hesaplama (Çünkü büyük dosya yüklenmedi!)
-            print(f"▶️ Toplam {len(texts)} kayıt için Embeddings yeniden hesaplanıyor. Bu işlem biraz zaman alabilir...")
-            embeddings = model.encode(texts) 
+            # 3. Embeddings'i Yeniden Hesaplama
+            print(f"▶️ Toplam {len(texts)} kayıt için Embeddings yeniden hesaplanıyor...")
+            embeddings = model.encode(texts, show_progress_bar=False) # Logları sadeleştirdik
             print("✅ Embeddings hesaplaması tamamlandı.")
             
             # 4. ChromaDB'yi Başlatma ve Oluşturma
@@ -99,12 +104,11 @@ def get_chroma_db():
 
             # 5. Verileri Toplu Halde Ekleme
             ids = [f"passage_{i}" for i in range(len(texts))]
-            metadatas = passages_df.to_dict(orient='records') # Tüm satırları metadata olarak kullanıyoruz
+            metadatas = passages_df.to_dict(orient='records') 
 
             batch_size = 500
             for i in range(0, len(ids), batch_size):
                 j = min(i + batch_size, len(ids))
-                # embeddings array'den listeye dönüştürme
                 embeddings_batch = [e.tolist() for e in embeddings[i:j]] 
                 collection.add(
                     ids=ids[i:j],
@@ -118,8 +122,8 @@ def get_chroma_db():
             return collection, model
             
         except Exception as e:
+            # Hata detayını terminalde gösteriyoruz, böylece neyin hata verdiğini anlarız.
             print(f"❌ RAG Modülü KRİTİK HATA: Veritabanı oluşturulamadı. Detay: {e}")
-            # Hata durumunda uygulama çalışmaya devam edebilmesi için None döndür
             return None, None
 
 # Fonksiyonu çalıştırarak global değişkenleri doldurun
@@ -127,7 +131,7 @@ global_collection, global_model = get_chroma_db()
 print(f"Chroma durumu: {global_collection is not None}") 
 
 
-# --- Sorgu Genişletme Fonksiyonu (DEĞİŞMEDİ) ---
+# --- Sorgu Genişletme Fonksiyonu (Aynı kalır) ---
 def expand_query(query):
     """Bazı yaygın ticari adları etken madde ile genişletir."""
     query_lower = query.lower()
@@ -142,7 +146,7 @@ def expand_query(query):
     return query
 
 
-# --- retrieve Fonksiyonu (DEĞİŞMEDİ) ---
+# --- retrieve Fonksiyonu (Aynı kalır) ---
 def retrieve(query, k=10):
     """Sorguya en yakın dokümanları ChromaDB'den çeker."""
     if global_collection is None:
@@ -159,7 +163,7 @@ def retrieve(query, k=10):
     except Exception as e:
         return {'documents': [[f"[HATA] Embeddings veya sorgulama başarısız oldu: {e}"]]}
 
-# --- rag_answer_gemini Fonksiyonu (DEĞİŞMEDİ) ---
+# --- rag_answer_gemini Fonksiyonu (Aynı kalır) ---
 def rag_answer_gemini(query, k=10, model_name="gemini-2.5-flash"):
     """Çekilen verileri kullanarak veya Google Search ile yanıt alır."""
     
