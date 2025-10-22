@@ -3,7 +3,7 @@ import os
 import json
 import re
 from dotenv import load_dotenv
-# DEĞİŞİKLİK BURADA: 'client' yerine 'rag_answer_gemini' ve 'global_collection' alınıyor
+# KRİTİK DÜZELTME: 'client' yerine 'global_collection' alınıyor
 from rag_module import rag_answer_gemini, global_collection 
 import textwrap
 
@@ -131,7 +131,7 @@ def display_chat_interface():
     col1, col2 = st.columns([8, 1])
     with col1: 
         st.title("🧠 MediMind – AI Health Assistant")
-        st.caption("⚠️ **ÖNEMLİ:** Bu yapay zekâ asistanı, hasta yorumlarına dayanır. **Tıbbi tavsiye değildir.** Doktorunuza danışın.")
+        st.caption("⚠️ **ÖNEMLİ:** Bu yapay zekâ asistanı, hasta yorumlarına dayanır. **Tıbbi tavsiye değildir.** Doktorunuza dananın.")
         
     with col2:
         btn_text = "☀️ Light" if st.session_state.theme_mode == "dark" else "🌙 Dark"
@@ -151,7 +151,7 @@ def display_chat_interface():
             else:
                 st.markdown(content, unsafe_allow_html=True)
 
-    # KRİTİK DEĞİŞİKLİK BURADA: 'client is None' yerine 'global_collection is None' kontrolü yapılıyor
+    # KRİTİK DÜZELTME KULLANILDI: 'client is None' yerine 'global_collection is None' kontrolü yapılıyor
     input_disabled = not bool(GEMINI_API_KEY) or global_collection is None
     if prompt := st.chat_input("💬 İlaç adını veya durumunu yazın...", disabled=input_disabled):
         st.session_state.messages.append({"role": "user", "content": prompt, "type": "text"})
