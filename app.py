@@ -3,7 +3,8 @@ import os
 import json
 import re
 from dotenv import load_dotenv
-from rag_module import rag_answer_gemini, client
+# DEĞİŞİKLİK BURADA: 'client' yerine 'rag_answer_gemini' ve 'global_collection' alınıyor
+from rag_module import rag_answer_gemini, global_collection 
 import textwrap
 
 # --- API Anahtarı Kontrolü ---
@@ -150,7 +151,8 @@ def display_chat_interface():
             else:
                 st.markdown(content, unsafe_allow_html=True)
 
-    input_disabled = not bool(GEMINI_API_KEY) or client is None
+    # KRİTİK DEĞİŞİKLİK BURADA: 'client is None' yerine 'global_collection is None' kontrolü yapılıyor
+    input_disabled = not bool(GEMINI_API_KEY) or global_collection is None
     if prompt := st.chat_input("💬 İlaç adını veya durumunu yazın...", disabled=input_disabled):
         st.session_state.messages.append({"role": "user", "content": prompt, "type": "text"})
         with st.chat_message("user"):
