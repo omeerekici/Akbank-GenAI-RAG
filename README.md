@@ -56,8 +56,9 @@ RAG Akış Şeması (Hibrit ve Karar Odaklı):
 
 ## 4. Web Arayüzü & Çalıştırma Kılavuzu 
 
+### 🚀 Uygulamaya Canlı Erişin : https://akbank-genai-rag-7svcg9yajuji6czy6zbetu.streamlit.app/
 
-### 🖼️ Elde Edilen Sonuçların ve Arayüzün Kanıtları
+### Elde Edilen Sonuçların ve Arayüzün Kanıtları
 
 Aşağıdaki görseller, projenin farklı fonksiyonlarının (RAG, Google Tool ve Halüsinasyon Kontrolü) başarılı çıktısını göstermektedir:
 
@@ -74,3 +75,9 @@ Aşağıdaki görseller, projenin farklı fonksiyonlarının (RAG, Google Tool v
 | **7** | **Halüsinasyon Kontrolü (Yetersiz Bilgi)** | ![Sorgulanan ilaç hakkında yeterli bilgi bulunamadığında verilen uyarı (Halüsinasyon Kontrolü/Bilgi Yetmezliği).](images/7.png) |
 
 ---
+
+## 5. Örnek Sorular
+"Zoloft ilacı tam olarak nedir ve hangi durumlarda kullanılır? Ayrıca kullanıcı yorumlarına göre ilacın genel etkilerini ve yan etkilerini özetler misin?"
+"Egzema için kullanılan ilaçlar nelerdir ?"
+"Accutane (İzotretinoin) ilacı hangi durumlarda kullanılır?"
+"Lexapro","Seroquel" gibi sade ilaç isimleri.
