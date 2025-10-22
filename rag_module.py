@@ -56,7 +56,7 @@ def get_chroma_db():
         try:
             
             # *******************************************************************
-            ### VERİ YÜKLEME VE İŞLEME MANTIĞI: BELLEK İÇİN KISITLAMA YAPILDI ###
+            ### VERİ YÜKLEME VE İŞLEME MANTIĞI: RAM & ENCODING İÇİN DÜZELTİLDİ ###
             # *******************************************************************
             
             # 1. Ham Veriyi Yükleme ve Birleştirme
@@ -67,7 +67,8 @@ def get_chroma_db():
                  raise FileNotFoundError(f"Ham veri dosyalarından biri veya ikisi bulunamadı. Lütfen {DATA_SOURCE_PATH} klasörünü kontrol edin.")
 
             # --- VERİ OKUMA VE BİRLEŞTİRME ---
-            # RAM nedeniyle sadece TRAIN setini okuyoruz ve Encoding Düzeltmesi yapıyoruz.
+            # KRİTİK DÜZELTME: Unicode hatası için 'latin-1' encoding kullanıldı.
+            # RAM nedeniyle sadece TRAIN setini okuyoruz.
             df_train = pd.read_csv(train_file, encoding='latin-1') 
             df = df_train # Sadece train setini kullanıyoruz
             
@@ -76,7 +77,7 @@ def get_chroma_db():
             df.dropna(subset=REQUIRED_COLUMNS, inplace=True)
             
             # *******************************************************
-            # KRİTİK KISITLAMA: RAM HATASINI ÇÖZMEK İÇİN BURASI GEREKLİ
+            # KRİTİK KISITLAMA: RAM HATASINI ÇÖZMEK İÇİN 50K SINIRLANDIRILDI
             # *******************************************************
             LIMIT_ROW_COUNT = 50000 
             if len(df) > LIMIT_ROW_COUNT:
