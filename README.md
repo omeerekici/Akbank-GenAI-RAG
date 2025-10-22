@@ -77,7 +77,7 @@ Aşağıdaki görseller, projenin farklı fonksiyonlarının (RAG, Google Tool v
 ---
 
 ## 5. Örnek Sorular
-"Zoloft ilacı tam olarak nedir ve hangi durumlarda kullanılır? Ayrıca kullanıcı yorumlarına göre ilacın genel etkilerini ve yan etkilerini özetler misin?"
-"Egzema için kullanılan ilaçlar nelerdir ?"
-"Accutane (İzotretinoin) ilacı hangi durumlarda kullanılır?"
-"Lexapro","Seroquel" gibi sade ilaç isimleri.
+**"Zoloft ilacı tam olarak nedir ve hangi durumlarda kullanılır? Ayrıca kullanıcı yorumlarına göre ilacın genel etkilerini ve yan etkilerini özetler misin ?"**
+**"Egzema için kullanılan ilaçlar nelerdir ?"**
+**"Accutane (İzotretinoin) ilacı hangi durumlarda kullanılır?"**
+**"Lexapro","Seroquel" gibi sade ilaç isimleri.**
