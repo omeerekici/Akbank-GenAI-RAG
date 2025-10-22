@@ -66,19 +66,21 @@ def get_chroma_db():
             if not os.path.exists(train_file) or not os.path.exists(test_file):
                  raise FileNotFoundError(f"Ham veri dosyalarından biri veya ikisi bulunamadı. Lütfen {DATA_SOURCE_PATH} klasörünü kontrol edin.")
 
-            # ENCODING DÜZELTME ve sadece TRAIN dosyasını alıyoruz (TEST'i şimdilik ihmal ettik)
-            # Daha güvenli bir okuma için 'latin-1' kullanıldı
-            df_train = pd.read_csv(train_file, encoding='latin-1')
+            # --- VERİ OKUMA VE BİRLEŞTİRME ---
+            # RAM nedeniyle sadece TRAIN setini okuyoruz ve Encoding Düzeltmesi yapıyoruz.
+            df_train = pd.read_csv(train_file, encoding='latin-1') 
             df = df_train # Sadece train setini kullanıyoruz
             
             # 2. Veri Temizleme ve Hazırlık
             REQUIRED_COLUMNS = ['review', 'drugName', 'condition', 'rating']
             df.dropna(subset=REQUIRED_COLUMNS, inplace=True)
             
-            # KRİTİK KISITLAMA: RAM HATASINI ÇÖZMEK İÇİN KAYIT SINIRLAMA
+            # *******************************************************
+            # KRİTİK KISITLAMA: RAM HATASINI ÇÖZMEK İÇİN BURASI GEREKLİ
+            # *******************************************************
             LIMIT_ROW_COUNT = 50000 
             if len(df) > LIMIT_ROW_COUNT:
-                df = df.head(LIMIT_ROW_COUNT)
+                df = df.head(LIMIT_ROW_COUNT) # İlk 50K satıra indir
             
             print(f"⚠️ Bellek koruması için sadece {len(df)} kayıt kullanılacaktır.")
             
@@ -95,7 +97,6 @@ def get_chroma_db():
             client = chromadb.PersistentClient(path=CHROMA_PATH) 
             
             try:
-                # Önce silmeye çalışıyoruz (varsa)
                 client.delete_collection(name=COLLECTION_NAME)
             except:
                 pass
